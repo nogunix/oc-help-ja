@@ -1,5 +1,9 @@
 # oc help tree（日本語） (`4.22.0-202607272042.p2.g7ec2e14.assembly.stream.el9-7ec2e14`)
 
+[![Update oc help](https://github.com/nogunix/oc-help-ja/actions/workflows/update.yml/badge.svg)](https://github.com/nogunix/oc-help-ja/actions/workflows/update.yml)
+[![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
+[![OpenShift](https://img.shields.io/badge/OpenShift-4.22-ee0000.svg)](https://github.com/openshift/oc)
+
 > **非公式の翻訳です。**
 > 本リポジトリは [openshift/oc](https://github.com/openshift/oc)（Copyright 2014 Red Hat, Inc.、Apache License 2.0）の `--help` 出力を日本語に翻訳した派生著作物です。
 > Red Hat, Inc. および OpenShift プロジェクトが本翻訳を承認・保証するものではありません。

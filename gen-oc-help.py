@@ -264,7 +264,13 @@ def client_version(oc):
 def write_readme(out, nodes, version, root):
     path = os.path.join(out, 'README.md')
     with open(path, 'w') as f:
+        major_minor = '.'.join(version.split('.')[:2]) if '.' in version else version
         f.write('# oc help tree（日本語） (`%s`)\n\n' % version)
+        f.write('[![Update oc help](https://github.com/nogunix/oc-help-ja/actions/workflows/update.yml/badge.svg)]'
+                '(https://github.com/nogunix/oc-help-ja/actions/workflows/update.yml)\n')
+        f.write('[![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)\n')
+        f.write('[![OpenShift](https://img.shields.io/badge/OpenShift-%s-ee0000.svg)]'
+                '(https://github.com/openshift/oc)\n\n' % major_minor)
         f.write('> **非公式の翻訳です。**\n')
         f.write('> 本リポジトリは [openshift/oc](https://github.com/openshift/oc)'
                 '（Copyright 2014 Red Hat, Inc.、Apache License 2.0）の '
