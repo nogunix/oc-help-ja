@@ -1,23 +1,23 @@
 #!/usr/bin/env bash
 # oc のヘルプ（Markdown）を $EDITOR で開く。
-#   ochelp adm policy add-role-to-user   -> help/adm/policy/add-role-to-user.md
+#   ochelp adm policy add-role-to-user   -> adm/policy/add-role-to-user.md
 #   ochelp                               -> fzf で選ぶ（無ければ一覧表示）
-#   ochelp -g PATTERN                    -> all.txt（生ヘルプ）を全文検索
+#   ochelp -g PATTERN                    -> all.txt（英語の生ヘルプ）を全文検索
 set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ed="${EDITOR:-${VISUAL:-vi}}"
-list() { (cd "$root/help" && find . -name '*.md' | sed 's|^\./||; s|\.md$||; s|/| |g' | sort); }
 
-if [[ "${1:-}" == "-g" ]]; then
-  shift
-  grep -n -i --color=auto -- "$*" "$root/all.txt"
-  exit
-fi
+case "${1:-}" in
+  -g) shift; grep -n -i --color=auto -- "$*" "$root/all.txt"; exit ;;
+esac
+
+list() { (cd "$root" && find . -name '*.md' ! -name README.md -not -path './.git/*' -not -path './.github/*' |
+         sed 's|^\./||; s|\.md$||; s|/| |g' | sort); }
 
 if [[ $# -eq 0 ]]; then
   if command -v fzf >/dev/null; then
-    sel=$(list | fzf --prompt='oc > ' \
-          --preview "cat \"$root/help/\$(echo {} | tr ' ' /).md\"")
+    sel=$(list | fzf --prompt="oc > " \
+          --preview "cat \"$root/\$(echo {} | tr ' ' /).md\"")
     [[ -n "$sel" ]] || exit 0
     set -- $sel
   else
@@ -26,11 +26,11 @@ if [[ $# -eq 0 ]]; then
   fi
 fi
 
-f="$root/help/$(IFS=/; echo "$*").md"
+f="$root/$(IFS=/; echo "$*").md"
 if [[ ! -f "$f" ]]; then
   echo "no help for: oc $*" >&2
   echo "近いもの:" >&2
-  (cd "$root/help" && find . -name "*${!#}*.md" | sed 's|^\./||; s|\.md$||; s|/| |g') >&2
+  (cd "$root" && find . -name "*${!#}*.md" -not -path './.git/*' | sed 's|^\./||; s|\.md$||; s|/| |g') >&2
   exit 1
 fi
 exec "$ed" "$f"

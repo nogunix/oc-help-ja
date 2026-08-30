@@ -1,0 +1,88 @@
+name: Update oc help (Japanese)
+
+on:
+  schedule:
+    # 毎週月曜 09:00 UTC (JST 18:00)
+    - cron: '0 9 * * 1'
+  workflow_dispatch:
+    inputs:
+      oc_version:
+        description: 'OCP バージョン (例: stable, stable-4.22, fast-4.23)。空欄で stable。'
+        required: false
+        default: 'stable'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Download oc CLI
+        run: |
+          CHANNEL="${{ github.event.inputs.oc_version || 'stable' }}"
+          URL="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/${CHANNEL}/openshift-client-linux.tar.gz"
+          echo "Downloading oc from: $URL"
+          curl -sSL "$URL" | tar xzf - -C /usr/local/bin oc
+          oc version --client
+
+      - name: Extract new msgids
+        run: python3 gen-oc-help.py --extract
+
+      - name: Check translation coverage
+        id: stats
+        run: |
+          python3 gen-oc-help.py --stats | tee /tmp/stats.txt
+          # 未訳の数を取得
+          TOTAL=$(grep -oP '^\d+' /tmp/stats.txt | head -1)
+          DONE=$(grep -oP '/ \K\d+' /tmp/stats.txt | head -1)
+          echo "total=$TOTAL" >> "$GITHUB_OUTPUT"
+          echo "done=$DONE" >> "$GITHUB_OUTPUT"
+
+      - name: Generate Japanese Markdown
+        run: python3 gen-oc-help.py
+
+      - name: Get oc version string
+        id: ver
+        run: |
+          VER=$(oc version --client -o json | python3 -c "import sys,json; print(json.load(sys.stdin)['clientVersion']['gitVersion'])")
+          echo "version=$VER" >> "$GITHUB_OUTPUT"
+
+      - name: Check for changes
+        id: diff
+        run: |
+          git add -A
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "## 変更あり" >> "$GITHUB_STEP_SUMMARY"
+            git diff --cached --stat >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Create Pull Request
+        if: steps.diff.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: auto-update/oc-${{ steps.ver.outputs.version }}
+          commit-message: |
+            oc ${{ steps.ver.outputs.version }} のヘルプを更新
+          title: "oc ${{ steps.ver.outputs.version }} のヘルプを更新"
+          body: |
+            ## 概要
+
+            `oc ${{ steps.ver.outputs.version }}` の `--help` 出力から日本語 Markdown を再生成しました。
+
+            - 翻訳済み: ${{ steps.stats.outputs.done }} / ${{ steps.stats.outputs.total }}
+            - 未訳の文字列は英語のまま出力されています
+
+            > このPRは GitHub Actions により自動生成されました。
+          labels: automated
+          delete-branch: true

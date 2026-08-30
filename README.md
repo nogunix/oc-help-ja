@@ -1,259 +1,269 @@
-# oc help tree (`4.22.0-202607272042.p2.g7ec2e14.assembly.stream.el9-7ec2e14`)
+# oc help tree（日本語） (`4.22.0-202607272042.p2.g7ec2e14.assembly.stream.el9-7ec2e14`)
+
+> **非公式の翻訳です。**
+> 本リポジトリは [openshift/oc](https://github.com/openshift/oc)（Copyright 2014 Red Hat, Inc.、Apache License 2.0）の `--help` 出力を日本語に翻訳した派生著作物です。
+> Red Hat, Inc. および OpenShift プロジェクトが本翻訳を承認・保証するものではありません。
+> "OpenShift" は Red Hat, Inc. の登録商標です。
 
 `gen-oc-help.py` で `oc ... --help` を再帰展開したもの。全 248 コマンド。
 
-- 読む: [`help/oc.md`](help/oc.md) から辿るか、下の目次から
+- 読む: [`oc.md`](oc.md) から辿るか、下の目次から
 - $EDITOR で開く: `./ochelp adm policy add-role-to-user`（引数なし + fzf で絞り込み）
-- 全文検索: `./ochelp -g PATTERN` / `rg PATTERN help/`（`all.txt` に生ヘルプを連結してある）
+- 全文検索: `./ochelp -g PATTERN`（`all.txt` の生ヘルプを検索）
 - 再生成: `python3 gen-oc-help.py`
+
+## ライセンス
+
+原著作物（`oc` コマンドのヘルプテキスト）は Apache License 2.0 に基づいて提供されています。
+本リポジトリの日本語訳も同ライセンスの下で配布します。詳細は [LICENSE](LICENSE) を参照してください。
 
 ## 目次
 
-- [`oc`](help/oc.md) — OpenShift Client
-  - [`oc login`](help/login.md) — Log in to a server
-  - [`oc new-project`](help/new-project.md) — Request a new project
-  - [`oc new-app`](help/new-app.md) — Create a new application
-  - [`oc status`](help/status.md) — Show an overview of the current project
-  - [`oc project`](help/project.md) — Switch to another project
-  - [`oc projects`](help/projects.md) — Display existing projects
-  - [`oc explain`](help/explain.md) — Get documentation for a resource
-  - [`oc rollout`](help/rollout.md) — Manage the rollout of a resource
-    - [`oc rollout cancel`](help/rollout/cancel.md) — Cancel the in-progress deployment
-    - [`oc rollout history`](help/rollout/history.md) — View rollout history
-    - [`oc rollout latest`](help/rollout/latest.md) — Start a new rollout for a deployment config with the latest state from its triggers
-    - [`oc rollout pause`](help/rollout/pause.md) — Mark the provided resource as paused
-    - [`oc rollout restart`](help/rollout/restart.md) — Restart a resource
-    - [`oc rollout resume`](help/rollout/resume.md) — Resume a paused resource
-    - [`oc rollout retry`](help/rollout/retry.md) — Retry the latest failed rollout
-    - [`oc rollout status`](help/rollout/status.md) — Show the status of the rollout
-    - [`oc rollout undo`](help/rollout/undo.md) — Undo a previous rollout
-  - [`oc rollback`](help/rollback.md) — Revert part of an application back to a previous deployment
-  - [`oc new-build`](help/new-build.md) — Create a new build configuration
-  - [`oc start-build`](help/start-build.md) — Start a new build
-  - [`oc cancel-build`](help/cancel-build.md) — Cancel running, pending, or new builds
-  - [`oc import-image`](help/import-image.md) — Import images from a container image registry
-  - [`oc tag`](help/tag.md) — Tag existing images into image streams
-  - [`oc create`](help/create.md) — Create a resource from a file or from stdin
-    - [`oc create build`](help/create/build.md) — Create a new build
-    - [`oc create clusterresourcequota`](help/create/clusterresourcequota.md) — Create a cluster resource quota
-    - [`oc create clusterrole`](help/create/clusterrole.md) — Create a cluster role
-    - [`oc create clusterrolebinding`](help/create/clusterrolebinding.md) — Create a cluster role binding for a particular cluster role
-    - [`oc create configmap`](help/create/configmap.md) — Create a config map from a local file, directory or literal value
-    - [`oc create cronjob`](help/create/cronjob.md) — Create a cron job with the specified name
-    - [`oc create deployment`](help/create/deployment.md) — Create a deployment with the specified name
-    - [`oc create deploymentconfig`](help/create/deploymentconfig.md) — Create a deployment config with default options that uses a given image
-    - [`oc create identity`](help/create/identity.md) — Manually create an identity (only needed if automatic creation is disabled)
-    - [`oc create imagestream`](help/create/imagestream.md) — Create a new empty image stream
-    - [`oc create imagestreamtag`](help/create/imagestreamtag.md) — Create a new image stream tag
-    - [`oc create ingress`](help/create/ingress.md) — Create an ingress with the specified name
-    - [`oc create job`](help/create/job.md) — Create a job with the specified name
-    - [`oc create namespace`](help/create/namespace.md) — Create a namespace with the specified name
-    - [`oc create poddisruptionbudget`](help/create/poddisruptionbudget.md) — Create a pod disruption budget with the specified name
-    - [`oc create priorityclass`](help/create/priorityclass.md) — Create a priority class with the specified name
-    - [`oc create quota`](help/create/quota.md) — Create a quota with the specified name
-    - [`oc create role`](help/create/role.md) — Create a role with single rule
-    - [`oc create rolebinding`](help/create/rolebinding.md) — Create a role binding for a particular role or cluster role
-    - [`oc create route`](help/create/route.md) — Expose containers externally via secured routes
-      - [`oc create route edge`](help/create/route/edge.md) — Create a route that uses edge TLS termination
-      - [`oc create route passthrough`](help/create/route/passthrough.md) — Create a route that uses passthrough TLS termination
-      - [`oc create route reencrypt`](help/create/route/reencrypt.md) — Create a route that uses reencrypt TLS termination
-    - [`oc create secret`](help/create/secret.md) — Create a secret using a specified subcommand
-      - [`oc create secret docker-registry`](help/create/secret/docker-registry.md) — Create a secret for use with a Docker registry
-      - [`oc create secret generic`](help/create/secret/generic.md) — Create a secret from a local file, directory, or literal value
-      - [`oc create secret tls`](help/create/secret/tls.md) — Create a TLS secret
-    - [`oc create service`](help/create/service.md) — Create a service using a specified subcommand
-      - [`oc create service clusterip`](help/create/service/clusterip.md) — Create a ClusterIP service
-      - [`oc create service externalname`](help/create/service/externalname.md) — Create an ExternalName service
-      - [`oc create service loadbalancer`](help/create/service/loadbalancer.md) — Create a LoadBalancer service
-      - [`oc create service nodeport`](help/create/service/nodeport.md) — Create a NodePort service
-    - [`oc create serviceaccount`](help/create/serviceaccount.md) — Create a service account with the specified name
-    - [`oc create token`](help/create/token.md) — Request a service account token
-    - [`oc create user`](help/create/user.md) — Manually create a user (only needed if automatic creation is disabled)
-    - [`oc create useridentitymapping`](help/create/useridentitymapping.md) — Manually map an identity to a user
-  - [`oc apply`](help/apply.md) — Apply a configuration to a resource by file name or stdin
-    - [`oc apply edit-last-applied`](help/apply/edit-last-applied.md) — Edit latest last-applied-configuration annotations of a resource/object
-    - [`oc apply set-last-applied`](help/apply/set-last-applied.md) — Set the last-applied-configuration annotation on a live object to match the contents of a file
-    - [`oc apply view-last-applied`](help/apply/view-last-applied.md) — View the latest last-applied-configuration annotations of a resource/object
-  - [`oc get`](help/get.md) — Display one or many resources
-  - [`oc describe`](help/describe.md) — Show details of a specific resource or group of resources
-  - [`oc edit`](help/edit.md) — Edit a resource on the server
-  - [`oc set`](help/set.md) — Commands that help set specific features on objects
-    - [`oc set build-hook`](help/set/build-hook.md) — Update a build hook on a build config
-    - [`oc set build-secret`](help/set/build-secret.md) — Update a build secret on a build config
-    - [`oc set data`](help/set/data.md) — Update the data within a config map or secret
-    - [`oc set deployment-hook`](help/set/deployment-hook.md) — Update a deployment hook on a deployment config
-    - [`oc set env`](help/set/env.md) — Update environment variables on a pod template
-    - [`oc set image`](help/set/image.md) — Update the image of a pod template
-    - [`oc set image-lookup`](help/set/image-lookup.md) — Change how images are resolved when deploying applications
-    - [`oc set probe`](help/set/probe.md) — Update a probe on a pod template
-    - [`oc set resources`](help/set/resources.md) — Update resource requests/limits on objects with pod templates
-    - [`oc set route-backends`](help/set/route-backends.md) — Update the backends for a route
-    - [`oc set selector`](help/set/selector.md) — Set the selector on a resource
-    - [`oc set serviceaccount`](help/set/serviceaccount.md) — Update the service account of a resource
-    - [`oc set subject`](help/set/subject.md) — Update the user, group, or service account in a role binding or cluster role binding
-    - [`oc set triggers`](help/set/triggers.md) — Update the triggers on one or more objects
-    - [`oc set volumes`](help/set/volumes.md) — Update volumes on a pod template
-  - [`oc label`](help/label.md) — Update the labels on a resource
-  - [`oc annotate`](help/annotate.md) — Update the annotations on a resource
-  - [`oc expose`](help/expose.md) — Expose a replicated application as a service or route
-  - [`oc delete`](help/delete.md) — Delete resources by file names, stdin, resources and names, or by resources and label selector
-  - [`oc scale`](help/scale.md) — Set a new size for a deployment, replica set, or replication controller
-  - [`oc autoscale`](help/autoscale.md) — Autoscale a deployment config, deployment, replica set, stateful set, or replication controller
-  - [`oc secrets`](help/secrets.md) — Manage secrets
-    - [`oc secrets link`](help/secrets/link.md) — Link secrets to a service account
-    - [`oc secrets unlink`](help/secrets/unlink.md) — Detach secrets from a service account
-  - [`oc logs`](help/logs.md) — Print the logs for a container in a pod
-  - [`oc rsh`](help/rsh.md) — Start a shell session in a container
-  - [`oc rsync`](help/rsync.md) — Copy files between a local file system and a pod
-  - [`oc port-forward`](help/port-forward.md) — Forward one or more local ports to a pod
-  - [`oc debug`](help/debug.md) — Launch a new instance of a pod for debugging
-  - [`oc exec`](help/exec.md) — Execute a command in a container
-  - [`oc proxy`](help/proxy.md) — Run a proxy to the Kubernetes API server
-  - [`oc attach`](help/attach.md) — Attach to a running container
-  - [`oc run`](help/run.md) — Run a particular image on the cluster
-  - [`oc cp`](help/cp.md) — Copy files and directories to and from containers
-  - [`oc wait`](help/wait.md) — Wait for a specific condition on one or many resources
-  - [`oc events`](help/events.md) — List events
-  - [`oc adm`](help/adm.md) — Tools for managing a cluster
-    - [`oc adm build-chain`](help/adm/build-chain.md) — Output the inputs and dependencies of your builds
-    - [`oc adm catalog`](help/adm/catalog.md) — Tools for managing the OpenShift OLM Catalogs
-      - [`oc adm catalog mirror`](help/adm/catalog/mirror.md) — Mirror an operator-registry catalog
-    - [`oc adm certificate`](help/adm/certificate.md) — Approve or reject certificate requests
-      - [`oc adm certificate approve`](help/adm/certificate/approve.md) — Approve a certificate signing request
-      - [`oc adm certificate deny`](help/adm/certificate/deny.md) — Deny a certificate signing request
-    - [`oc adm copy-to-node`](help/adm/copy-to-node.md) — Copy specified files to the node
-    - [`oc adm cordon`](help/adm/cordon.md) — Mark node as unschedulable
-    - [`oc adm create-bootstrap-project-template`](help/adm/create-bootstrap-project-template.md) — Create a bootstrap project template
-    - [`oc adm create-error-template`](help/adm/create-error-template.md) — Create an error page template
-    - [`oc adm create-login-template`](help/adm/create-login-template.md) — Create a login template
-    - [`oc adm create-provider-selection-template`](help/adm/create-provider-selection-template.md) — Create a provider selection template
-    - [`oc adm drain`](help/adm/drain.md) — Drain node in preparation for maintenance
-    - [`oc adm groups`](help/adm/groups.md) — Manage groups
-      - [`oc adm groups add-users`](help/adm/groups/add-users.md) — Add users to a group
-      - [`oc adm groups new`](help/adm/groups/new.md) — Create a new group
-      - [`oc adm groups prune`](help/adm/groups/prune.md) — Remove old OpenShift groups referencing missing records from an external provider
-      - [`oc adm groups remove-users`](help/adm/groups/remove-users.md) — Remove users from a group
-      - [`oc adm groups sync`](help/adm/groups/sync.md) — Sync OpenShift groups with records from an external provider
-    - [`oc adm inspect`](help/adm/inspect.md) — Collect debugging data for a given resource
-    - [`oc adm migrate`](help/adm/migrate.md) — Migrate data in the cluster
-      - [`oc adm migrate icsp`](help/adm/migrate/icsp.md) — Update imagecontentsourcepolicy file(s) to imagedigestmirrorset file(s)
-      - [`oc adm migrate template-instances`](help/adm/migrate/template-instances.md) — Update template instances to point to the latest group-version-kinds
-    - [`oc adm must-gather`](help/adm/must-gather.md) — Launch a new instance of a pod for gathering debug information
-    - [`oc adm new-project`](help/adm/new-project.md) — Create a new project
-    - [`oc adm node-image`](help/adm/node-image.md) — Add nodes to an existing cluster
-      - [`oc adm node-image create`](help/adm/node-image/create.md) — Create an ISO image for booting the nodes to be added to the target cluster
-      - [`oc adm node-image monitor`](help/adm/node-image/monitor.md) — Monitor new nodes being added to an OpenShift cluster
-    - [`oc adm node-logs`](help/adm/node-logs.md) — Display and filter node logs
-    - [`oc adm ocp-certificates`](help/adm/ocp-certificates.md) — Tools for managing a cluster's certificates
-      - [`oc adm ocp-certificates monitor-certificates`](help/adm/ocp-certificates/monitor-certificates.md) — Watch platform certificates
-      - [`oc adm ocp-certificates regenerate-leaf`](help/adm/ocp-certificates/regenerate-leaf.md) — Regenerate client and serving certificates of an OpenShift cluster
-      - [`oc adm ocp-certificates regenerate-machine-config-server-serving-cert`](help/adm/ocp-certificates/regenerate-machine-config-server-serving-cert.md) — Regenerate the machine config operator certificates in an OpenShift cluster
-      - [`oc adm ocp-certificates regenerate-top-level`](help/adm/ocp-certificates/regenerate-top-level.md) — Regenerate the top level certificates in an OpenShift cluster
-      - [`oc adm ocp-certificates remove-old-trust`](help/adm/ocp-certificates/remove-old-trust.md) — Remove old CAs from ConfigMaps representing platform trust bundles in an OpenShift cluster
-      - [`oc adm ocp-certificates update-ignition-ca-bundle-for-machine-config-server`](help/adm/ocp-certificates/update-ignition-ca-bundle-for-machine-config-server.md) — Update user-data secrets in an OpenShift cluster to use updated MCO certfs
-    - [`oc adm policy`](help/adm/policy.md) — Manage cluster authorization and security policy
-      - [`oc adm policy add-cluster-role-to-group`](help/adm/policy/add-cluster-role-to-group.md) — Add a role to groups for all projects in the cluster
-      - [`oc adm policy add-cluster-role-to-user`](help/adm/policy/add-cluster-role-to-user.md) — Add a role to users for all projects in the cluster
-      - [`oc adm policy add-role-to-group`](help/adm/policy/add-role-to-group.md) — Add a role to groups for the project
-      - [`oc adm policy add-role-to-user`](help/adm/policy/add-role-to-user.md) — Add a role to users or service accounts for the current project
-      - [`oc adm policy add-scc-to-group`](help/adm/policy/add-scc-to-group.md) — Add a security context constraint to groups
-      - [`oc adm policy add-scc-to-user`](help/adm/policy/add-scc-to-user.md) — Add a security context constraint to users or a service account
-      - [`oc adm policy remove-cluster-role-from-group`](help/adm/policy/remove-cluster-role-from-group.md) — Remove a role from groups for all projects in the cluster
-      - [`oc adm policy remove-cluster-role-from-user`](help/adm/policy/remove-cluster-role-from-user.md) — Remove a role from users for all projects in the cluster
-      - [`oc adm policy remove-group`](help/adm/policy/remove-group.md) — Remove group from the project
-      - [`oc adm policy remove-role-from-group`](help/adm/policy/remove-role-from-group.md) — Remove a role from groups for the project
-      - [`oc adm policy remove-role-from-user`](help/adm/policy/remove-role-from-user.md) — Remove a role from users for the project
-      - [`oc adm policy remove-scc-from-group`](help/adm/policy/remove-scc-from-group.md) — Remove a group from a security context constraint
-      - [`oc adm policy remove-scc-from-user`](help/adm/policy/remove-scc-from-user.md) — Remove a user from a security context constraint
-      - [`oc adm policy remove-user`](help/adm/policy/remove-user.md) — Remove user from the project
-      - [`oc adm policy scc-review`](help/adm/policy/scc-review.md) — Check which service account can create a pod
-      - [`oc adm policy scc-subject-review`](help/adm/policy/scc-subject-review.md) — Check whether a user or a service account can create a pod
-      - [`oc adm policy who-can`](help/adm/policy/who-can.md) — List who can perform the specified action on a resource
-    - [`oc adm prune`](help/adm/prune.md) — Remove older versions of resources from the server
-      - [`oc adm prune auth`](help/adm/prune/auth.md) — Removes references to the specified roles, clusterroles, users, and groups
-      - [`oc adm prune builds`](help/adm/prune/builds.md) — Remove old completed and failed builds
-      - [`oc adm prune deployments`](help/adm/prune/deployments.md) — Remove old completed and failed deployment configs
-      - [`oc adm prune groups`](help/adm/prune/groups.md) — Remove old OpenShift groups referencing missing records from an external provider
-      - [`oc adm prune images`](help/adm/prune/images.md) — Remove unreferenced images
-      - [`oc adm prune renderedmachineconfigs`](help/adm/prune/renderedmachineconfigs.md) — Prunes rendered MachineConfigs in an OpenShift cluster
-        - [`oc adm prune renderedmachineconfigs list`](help/adm/prune/renderedmachineconfigs/list.md) — Lists rendered MachineConfigs in an OpenShift cluster
-    - [`oc adm reboot-machine-config-pool`](help/adm/reboot-machine-config-pool.md) — Initiate reboot of the specified MachineConfigPool
-    - [`oc adm release`](help/adm/release.md) — Tools for managing the OpenShift release process
-      - [`oc adm release extract`](help/adm/release/extract.md) — Extract the contents of an update payload to disk
-      - [`oc adm release info`](help/adm/release/info.md) — Display information about a release
-      - [`oc adm release new`](help/adm/release/new.md) — Create a new OpenShift release
-    - [`oc adm restart-kubelet`](help/adm/restart-kubelet.md) — Restart kubelet on the specified nodes
-    - [`oc adm taint`](help/adm/taint.md) — Update the taints on one or more nodes
-    - [`oc adm top`](help/adm/top.md) — Show usage statistics of resources on the server
-      - [`oc adm top images`](help/adm/top/images.md) — Show usage statistics for images
-      - [`oc adm top imagestreams`](help/adm/top/imagestreams.md) — Show usage statistics for image streams
-      - [`oc adm top node`](help/adm/top/node.md) — Display resource (CPU/memory) usage of nodes
-      - [`oc adm top persistentvolumeclaims`](help/adm/top/persistentvolumeclaims.md) — Experimental: Show usage statistics for bound persistentvolumeclaims
-      - [`oc adm top pod`](help/adm/top/pod.md) — Display resource (CPU/memory) usage of pods
-    - [`oc adm uncordon`](help/adm/uncordon.md) — Mark node as schedulable
-    - [`oc adm upgrade`](help/adm/upgrade.md) — Upgrade a cluster or adjust the upgrade channel
-      - [`oc adm upgrade channel`](help/adm/upgrade/channel.md) — Set or clear the update channel
-      - [`oc adm upgrade recommend`](help/adm/upgrade/recommend.md) — Displays cluster update recommendations.
-      - [`oc adm upgrade status`](help/adm/upgrade/status.md) — Display the status of the current cluster version update or multi-arch migration
-    - [`oc adm verify-image-signature`](help/adm/verify-image-signature.md) — Verify the image identity contained in the image signature
-    - [`oc adm wait-for-node-reboot`](help/adm/wait-for-node-reboot.md) — Wait for nodes to reboot after running `oc adm reboot-machine-config-pool`
-    - [`oc adm wait-for-stable-cluster`](help/adm/wait-for-stable-cluster.md) — Wait for the platform operators to become stable
-  - [`oc replace`](help/replace.md) — Replace a resource by file name or stdin
-  - [`oc patch`](help/patch.md) — Update fields of a resource
-  - [`oc process`](help/process.md) — Process a template into list of resources
-  - [`oc extract`](help/extract.md) — Extract secrets or config maps to disk
-  - [`oc observe`](help/observe.md) — Observe changes to resources and react to them (experimental)
-  - [`oc policy`](help/policy.md) — Manage authorization policy
-    - [`oc policy add-role-to-group`](help/policy/add-role-to-group.md) — Add a role to groups for the project
-    - [`oc policy add-role-to-user`](help/policy/add-role-to-user.md) — Add a role to users or service accounts for the current project
-    - [`oc policy remove-group`](help/policy/remove-group.md) — Remove group from the project
-    - [`oc policy remove-role-from-group`](help/policy/remove-role-from-group.md) — Remove a role from groups for the project
-    - [`oc policy remove-role-from-user`](help/policy/remove-role-from-user.md) — Remove a role from users for the project
-    - [`oc policy remove-user`](help/policy/remove-user.md) — Remove user from the project
-    - [`oc policy scc-review`](help/policy/scc-review.md) — Check which service account can create a pod
-    - [`oc policy scc-subject-review`](help/policy/scc-subject-review.md) — Check whether a user or a service account can create a pod
-    - [`oc policy who-can`](help/policy/who-can.md) — List who can perform the specified action on a resource
-  - [`oc auth`](help/auth.md) — Inspect authorization
-    - [`oc auth can-i`](help/auth/can-i.md) — Check whether an action is allowed
-    - [`oc auth reconcile`](help/auth/reconcile.md) — Reconciles rules for RBAC role, role binding, cluster role, and cluster role binding objects
-    - [`oc auth whoami`](help/auth/whoami.md) — Experimental: Check self subject attributes
-  - [`oc image`](help/image.md) — Useful commands for managing images
-    - [`oc image append`](help/image/append.md) — Add layers to images and push them to a registry
-    - [`oc image extract`](help/image/extract.md) — Copy files from an image to the file system
-    - [`oc image info`](help/image/info.md) — Display information about an image
-    - [`oc image mirror`](help/image/mirror.md) — Mirror images from one repository to another
-  - [`oc registry`](help/registry.md) — Commands for working with the registry
-    - [`oc registry login`](help/registry/login.md) — Log in to the integrated registry
-  - [`oc idle`](help/idle.md) — Idle scalable resources
-  - [`oc api-versions`](help/api-versions.md) — Print the supported API versions on the server, in the form of "group/version"
-  - [`oc api-resources`](help/api-resources.md) — Print the supported API resources on the server
-  - [`oc cluster-info`](help/cluster-info.md) — Display cluster information
-    - [`oc cluster-info dump`](help/cluster-info/dump.md) — Dump relevant information for debugging and diagnosis
-  - [`oc diff`](help/diff.md) — Diff the live version against a would-be applied version
-  - [`oc kustomize`](help/kustomize.md) — Build a kustomization target from a directory or URL
-  - [`oc get-token`](help/get-token.md) — Experimental: Get token from external OIDC issuer as credentials exec plugin
-  - [`oc logout`](help/logout.md) — End the current server session
-  - [`oc config`](help/config.md) — Modify kubeconfig files
-    - [`oc config current-context`](help/config/current-context.md) — Display the current-context
-    - [`oc config delete-cluster`](help/config/delete-cluster.md) — Delete the specified cluster from the kubeconfig
-    - [`oc config delete-context`](help/config/delete-context.md) — Delete the specified context from the kubeconfig
-    - [`oc config delete-user`](help/config/delete-user.md) — Delete the specified user from the kubeconfig
-    - [`oc config get-clusters`](help/config/get-clusters.md) — Display clusters defined in the kubeconfig
-    - [`oc config get-contexts`](help/config/get-contexts.md) — Describe one or many contexts
-    - [`oc config get-users`](help/config/get-users.md) — Display users defined in the kubeconfig
-    - [`oc config new-admin-kubeconfig`](help/config/new-admin-kubeconfig.md) — Generate, make the server trust, and display a new admin.kubeconfig
-    - [`oc config new-kubelet-bootstrap-kubeconfig`](help/config/new-kubelet-bootstrap-kubeconfig.md) — Generate, make the server trust, and display a new kubelet /etc/kubernetes/kubeconfig
-    - [`oc config refresh-ca-bundle`](help/config/refresh-ca-bundle.md) — Update the OpenShift CA bundle by contacting the API server
-    - [`oc config rename-context`](help/config/rename-context.md) — Rename a context from the kubeconfig file
-    - [`oc config set`](help/config/set.md) — Set an individual value in a kubeconfig file
-    - [`oc config set-cluster`](help/config/set-cluster.md) — Set a cluster entry in kubeconfig
-    - [`oc config set-context`](help/config/set-context.md) — Set a context entry in kubeconfig
-    - [`oc config set-credentials`](help/config/set-credentials.md) — Set a user entry in kubeconfig
-    - [`oc config unset`](help/config/unset.md) — Unset an individual value in a kubeconfig file
-    - [`oc config use-context`](help/config/use-context.md) — Set the current-context in a kubeconfig file
-    - [`oc config view`](help/config/view.md) — Display merged kubeconfig settings or a specified kubeconfig file
-  - [`oc whoami`](help/whoami.md) — Return information about the current session
-  - [`oc completion`](help/completion.md) — Output shell completion code for the specified shell (bash, zsh, fish, or powershell)
-  - [`oc plugin`](help/plugin.md) — Provides utilities for interacting with plugins
-    - [`oc plugin list`](help/plugin/list.md) — List all visible plugin executables on a user's PATH
-  - [`oc version`](help/version.md) — Print the client and server version information
+- [`oc`](oc.md) — OpenShift クライアント
+  - [`oc login`](login.md) — サーバーにログインする
+  - [`oc new-project`](new-project.md) — 新しいプロジェクトを要求する
+  - [`oc new-app`](new-app.md) — 新しいアプリケーションを作成する
+  - [`oc status`](status.md) — 現在のプロジェクトの概要を表示する
+  - [`oc project`](project.md) — 別のプロジェクトに切り替える
+  - [`oc projects`](projects.md) — 既存のプロジェクトを表示する
+  - [`oc explain`](explain.md) — リソースのドキュメントを取得する
+  - [`oc rollout`](rollout.md) — リソースのロールアウトを管理する
+    - [`oc rollout cancel`](rollout/cancel.md) — 進行中のデプロイをキャンセルする
+    - [`oc rollout history`](rollout/history.md) — ロールアウトの履歴を表示する
+    - [`oc rollout latest`](rollout/latest.md) — トリガーの最新の状態を使って、デプロイメント設定の新しいロールアウトを開始する
+    - [`oc rollout pause`](rollout/pause.md) — 指定したリソースを一時停止状態にする
+    - [`oc rollout restart`](rollout/restart.md) — リソースを再起動する
+    - [`oc rollout resume`](rollout/resume.md) — 一時停止中のリソースを再開する
+    - [`oc rollout retry`](rollout/retry.md) — 最後に失敗したロールアウトを再試行する
+    - [`oc rollout status`](rollout/status.md) — ロールアウトの状況を表示する
+    - [`oc rollout undo`](rollout/undo.md) — 以前のロールアウトに戻す
+  - [`oc rollback`](rollback.md) — アプリケーションの一部を以前のデプロイに戻す
+  - [`oc new-build`](new-build.md) — 新しいビルド設定を作成する
+  - [`oc start-build`](start-build.md) — 新しいビルドを開始する
+  - [`oc cancel-build`](cancel-build.md) — 実行中・保留中・新規のビルドをキャンセルする
+  - [`oc import-image`](import-image.md) — コンテナイメージレジストリからイメージをインポートする
+  - [`oc tag`](tag.md) — 既存のイメージにタグを付けてイメージストリームに登録する
+  - [`oc create`](create.md) — ファイルまたは標準入力からリソースを作成する
+    - [`oc create build`](create/build.md) — 新しいビルドを作成する
+    - [`oc create clusterresourcequota`](create/clusterresourcequota.md) — クラスタリソースクォータを作成する
+    - [`oc create clusterrole`](create/clusterrole.md) — クラスタロールを作成する
+    - [`oc create clusterrolebinding`](create/clusterrolebinding.md) — 特定のクラスタロールに対するクラスタロールバインディングを作成する
+    - [`oc create configmap`](create/configmap.md) — ローカルのファイル、ディレクトリ、またはリテラル値から config map を作成する
+    - [`oc create cronjob`](create/cronjob.md) — 指定した名前で cron job を作成する
+    - [`oc create deployment`](create/deployment.md) — 指定した名前でデプロイメントを作成する
+    - [`oc create deploymentconfig`](create/deploymentconfig.md) — 指定したイメージを使用するデプロイメント設定を、デフォルト設定で作成する
+    - [`oc create identity`](create/identity.md) — identity を手動で作成する（自動作成が無効な場合のみ必要）
+    - [`oc create imagestream`](create/imagestream.md) — 空のイメージストリームを新規作成する
+    - [`oc create imagestreamtag`](create/imagestreamtag.md) — 新しいイメージストリームタグを作成する
+    - [`oc create ingress`](create/ingress.md) — 指定した名前で Ingress を作成する
+    - [`oc create job`](create/job.md) — 指定した名前でジョブを作成する
+    - [`oc create namespace`](create/namespace.md) — 指定した名前で namespace を作成する
+    - [`oc create poddisruptionbudget`](create/poddisruptionbudget.md) — 指定した名前で pod disruption budget を作成する
+    - [`oc create priorityclass`](create/priorityclass.md) — 指定した名前で priority class を作成する
+    - [`oc create quota`](create/quota.md) — 指定した名前でクォータを作成する
+    - [`oc create role`](create/role.md) — ルールを 1 つだけ持つロールを作成する
+    - [`oc create rolebinding`](create/rolebinding.md) — 特定のロールまたはクラスタロールに対するロールバインディングを作成する
+    - [`oc create route`](create/route.md) — セキュアな Route を通じてコンテナを外部に公開する
+      - [`oc create route edge`](create/route/edge.md) — edge TLS 終端を使うルートを作成する
+      - [`oc create route passthrough`](create/route/passthrough.md) — passthrough TLS 終端を使うルートを作成する
+      - [`oc create route reencrypt`](create/route/reencrypt.md) — reencrypt TLS 終端を使うルートを作成する
+    - [`oc create secret`](create/secret.md) — 指定したサブコマンドを使ってシークレットを作成する
+      - [`oc create secret docker-registry`](create/secret/docker-registry.md) — Docker レジストリで使用するシークレットを作成する
+      - [`oc create secret generic`](create/secret/generic.md) — ローカルのファイル、ディレクトリ、またはリテラル値からシークレットを作成する
+      - [`oc create secret tls`](create/secret/tls.md) — TLS シークレットを作成する
+    - [`oc create service`](create/service.md) — 指定したサブコマンドを使って Service を作成する
+      - [`oc create service clusterip`](create/service/clusterip.md) — ClusterIP Service を作成する
+      - [`oc create service externalname`](create/service/externalname.md) — ExternalName Service を作成する
+      - [`oc create service loadbalancer`](create/service/loadbalancer.md) — LoadBalancer Service を作成する
+      - [`oc create service nodeport`](create/service/nodeport.md) — NodePort Service を作成する
+    - [`oc create serviceaccount`](create/serviceaccount.md) — 指定した名前でサービスアカウントを作成する
+    - [`oc create token`](create/token.md) — サービスアカウントのトークンを要求する
+    - [`oc create user`](create/user.md) — ユーザーを手動で作成する（自動作成が無効な場合のみ必要）
+    - [`oc create useridentitymapping`](create/useridentitymapping.md) — identity をユーザーに手動でマッピングする
+  - [`oc apply`](apply.md) — ファイル名または標準入力から、リソースに設定を適用する
+    - [`oc apply edit-last-applied`](apply/edit-last-applied.md) — リソース / オブジェクトの最新の last-applied-configuration アノテーションを編集する
+    - [`oc apply set-last-applied`](apply/set-last-applied.md) — 稼働中のオブジェクトの last-applied-configuration アノテーションを、ファイルの内容に合わせて設定する
+    - [`oc apply view-last-applied`](apply/view-last-applied.md) — リソース / オブジェクトの最新の last-applied-configuration アノテーションを表示する
+  - [`oc get`](get.md) — 1 つまたは複数のリソースを表示する
+  - [`oc describe`](describe.md) — 特定のリソース、またはリソース群の詳細を表示する
+  - [`oc edit`](edit.md) — サーバー上のリソースを編集する
+  - [`oc set`](set.md) — オブジェクトの特定の機能を設定するためのコマンド
+    - [`oc set build-hook`](set/build-hook.md) — ビルド設定のビルドフックを更新する
+    - [`oc set build-secret`](set/build-secret.md) — ビルド設定のビルドシークレットを更新する
+    - [`oc set data`](set/data.md) — config map またはシークレット内のデータを更新する
+    - [`oc set deployment-hook`](set/deployment-hook.md) — デプロイメント設定のデプロイメントフックを更新する
+    - [`oc set env`](set/env.md) — Pod テンプレートの環境変数を更新する
+    - [`oc set image`](set/image.md) — Pod テンプレートのイメージを更新する
+    - [`oc set image-lookup`](set/image-lookup.md) — アプリケーションのデプロイ時にイメージをどう解決するかを変更する
+    - [`oc set probe`](set/probe.md) — Pod テンプレートのプローブを更新する
+    - [`oc set resources`](set/resources.md) — Pod テンプレートを持つオブジェクトのリソース requests / limits を更新する
+    - [`oc set route-backends`](set/route-backends.md) — ルートのバックエンドを更新する
+    - [`oc set selector`](set/selector.md) — リソースにセレクターを設定する
+    - [`oc set serviceaccount`](set/serviceaccount.md) — リソースのサービスアカウントを更新する
+    - [`oc set subject`](set/subject.md) — ロールバインディングまたはクラスタロールバインディング内のユーザー、グループ、サービスアカウントを更新する
+    - [`oc set triggers`](set/triggers.md) — 1 つ以上のオブジェクトのトリガーを更新する
+    - [`oc set volumes`](set/volumes.md) — Pod テンプレートのボリュームを更新する
+  - [`oc label`](label.md) — リソースのラベルを更新する
+  - [`oc annotate`](annotate.md) — リソースのアノテーションを更新する
+  - [`oc expose`](expose.md) — 複製されたアプリケーションを Service または Route として公開する
+  - [`oc delete`](delete.md) — ファイル名、標準入力、リソースと名前、またはリソースとラベルセレクターでリソースを削除する
+  - [`oc scale`](scale.md) — デプロイメント、レプリカセット、またはレプリケーションコントローラーの新しいサイズを設定する
+  - [`oc autoscale`](autoscale.md) — デプロイメント設定、デプロイメント、レプリカセット、ステートフルセット、またはレプリケーションコントローラーをオートスケールする
+  - [`oc secrets`](secrets.md) — シークレットを管理する
+    - [`oc secrets link`](secrets/link.md) — サービスアカウントにシークレットを紐づける
+    - [`oc secrets unlink`](secrets/unlink.md) — サービスアカウントからシークレットを切り離す
+  - [`oc logs`](logs.md) — Pod 内のコンテナのログを表示する
+  - [`oc rsh`](rsh.md) — コンテナ内でシェルセッションを開始する
+  - [`oc rsync`](rsync.md) — ローカルファイルシステムと Pod の間でファイルをコピーする
+  - [`oc port-forward`](port-forward.md) — 1 つ以上のローカルポートを Pod に転送する
+  - [`oc debug`](debug.md) — デバッグ用に新しい Pod のインスタンスを起動する
+  - [`oc exec`](exec.md) — コンテナ内でコマンドを実行する
+  - [`oc proxy`](proxy.md) — Kubernetes API サーバーへのプロキシを実行する
+  - [`oc attach`](attach.md) — 実行中のコンテナにアタッチする
+  - [`oc run`](run.md) — 指定したイメージをクラスタ上で実行する
+  - [`oc cp`](cp.md) — コンテナとの間でファイルやディレクトリをコピーする
+  - [`oc wait`](wait.md) — 1 つ以上のリソースが特定の条件を満たすまで待機する
+  - [`oc events`](events.md) — イベントを一覧する
+  - [`oc adm`](adm.md) — クラスタを管理するためのツール
+    - [`oc adm build-chain`](adm/build-chain.md) — ビルドの入力と依存関係を出力する
+    - [`oc adm catalog`](adm/catalog.md) — OpenShift の OLM カタログを管理するためのツール
+      - [`oc adm catalog mirror`](adm/catalog/mirror.md) — operator-registry のカタログをミラーする
+    - [`oc adm certificate`](adm/certificate.md) — 証明書要求を承認または拒否する
+      - [`oc adm certificate approve`](adm/certificate/approve.md) — 証明書署名要求を承認する
+      - [`oc adm certificate deny`](adm/certificate/deny.md) — 証明書署名要求を拒否する
+    - [`oc adm copy-to-node`](adm/copy-to-node.md) — 指定したファイルをノードにコピーする
+    - [`oc adm cordon`](adm/cordon.md) — ノードをスケジュール不可にする
+    - [`oc adm create-bootstrap-project-template`](adm/create-bootstrap-project-template.md) — bootstrap プロジェクトテンプレートを作成する
+    - [`oc adm create-error-template`](adm/create-error-template.md) — エラーページテンプレートを作成する
+    - [`oc adm create-login-template`](adm/create-login-template.md) — ログインテンプレートを作成する
+    - [`oc adm create-provider-selection-template`](adm/create-provider-selection-template.md) — プロバイダ選択テンプレートを作成する
+    - [`oc adm drain`](adm/drain.md) — メンテナンスに備えてノードを drain する
+    - [`oc adm groups`](adm/groups.md) — グループを管理する
+      - [`oc adm groups add-users`](adm/groups/add-users.md) — グループにユーザーを追加する
+      - [`oc adm groups new`](adm/groups/new.md) — 新しいグループを作成する
+      - [`oc adm groups prune`](adm/groups/prune.md) — 外部プロバイダにレコードが存在しない、古い OpenShift グループを削除する
+      - [`oc adm groups remove-users`](adm/groups/remove-users.md) — グループからユーザーを削除する
+      - [`oc adm groups sync`](adm/groups/sync.md) — OpenShift のグループを外部プロバイダのレコードと同期する
+    - [`oc adm inspect`](adm/inspect.md) — 指定したリソースのデバッグ用データを収集する
+    - [`oc adm migrate`](adm/migrate.md) — クラスタ内のデータを移行する
+      - [`oc adm migrate icsp`](adm/migrate/icsp.md) — imagecontentsourcepolicy ファイルを imagedigestmirrorset ファイルに更新する
+      - [`oc adm migrate template-instances`](adm/migrate/template-instances.md) — テンプレートインスタンスが最新の group-version-kind を指すよう更新する
+    - [`oc adm must-gather`](adm/must-gather.md) — デバッグ情報を収集するための Pod を新しく起動する
+    - [`oc adm new-project`](adm/new-project.md) — 新しいプロジェクトを作成する
+    - [`oc adm node-image`](adm/node-image.md) — 既存のクラスタにノードを追加する
+      - [`oc adm node-image create`](adm/node-image/create.md) — 対象クラスタに追加するノードを起動するための ISO イメージを作成する
+      - [`oc adm node-image monitor`](adm/node-image/monitor.md) — OpenShift クラスタに追加中の新しいノードを監視する
+    - [`oc adm node-logs`](adm/node-logs.md) — ノードのログを表示・絞り込みする
+    - [`oc adm ocp-certificates`](adm/ocp-certificates.md) — クラスタの証明書を管理するためのツール
+      - [`oc adm ocp-certificates monitor-certificates`](adm/ocp-certificates/monitor-certificates.md) — プラットフォームの証明書を監視する
+      - [`oc adm ocp-certificates regenerate-leaf`](adm/ocp-certificates/regenerate-leaf.md) — OpenShift クラスタのクライアント証明書とサービング証明書を再生成する
+      - [`oc adm ocp-certificates regenerate-machine-config-server-serving-cert`](adm/ocp-certificates/regenerate-machine-config-server-serving-cert.md) — OpenShift クラスタの machine config operator の証明書を再生成する
+      - [`oc adm ocp-certificates regenerate-top-level`](adm/ocp-certificates/regenerate-top-level.md) — OpenShift クラスタのトップレベル証明書を再生成する
+      - [`oc adm ocp-certificates remove-old-trust`](adm/ocp-certificates/remove-old-trust.md) — OpenShift クラスタで、プラットフォームの信頼バンドルを表す ConfigMap から古い CA を削除する
+      - [`oc adm ocp-certificates update-ignition-ca-bundle-for-machine-config-server`](adm/ocp-certificates/update-ignition-ca-bundle-for-machine-config-server.md) — OpenShift クラスタの user-data シークレットを、更新された MCO 証明書を使うよう更新する
+    - [`oc adm policy`](adm/policy.md) — クラスタの認可とセキュリティポリシーを管理する
+      - [`oc adm policy add-cluster-role-to-group`](adm/policy/add-cluster-role-to-group.md) — クラスタ内のすべてのプロジェクトを対象に、グループにロールを付与する
+      - [`oc adm policy add-cluster-role-to-user`](adm/policy/add-cluster-role-to-user.md) — クラスタ内のすべてのプロジェクトを対象に、ユーザーにロールを付与する
+      - [`oc adm policy add-role-to-group`](adm/policy/add-role-to-group.md) — プロジェクトを対象に、グループにロールを付与する
+      - [`oc adm policy add-role-to-user`](adm/policy/add-role-to-user.md) — 現在のプロジェクトを対象に、ユーザーまたはサービスアカウントにロールを付与する
+      - [`oc adm policy add-scc-to-group`](adm/policy/add-scc-to-group.md) — グループに security context constraint を付与する
+      - [`oc adm policy add-scc-to-user`](adm/policy/add-scc-to-user.md) — ユーザーまたはサービスアカウントに security context constraint を付与する
+      - [`oc adm policy remove-cluster-role-from-group`](adm/policy/remove-cluster-role-from-group.md) — クラスタ内のすべてのプロジェクトを対象に、グループからロールを削除する
+      - [`oc adm policy remove-cluster-role-from-user`](adm/policy/remove-cluster-role-from-user.md) — クラスタ内のすべてのプロジェクトを対象に、ユーザーからロールを削除する
+      - [`oc adm policy remove-group`](adm/policy/remove-group.md) — プロジェクトからグループを削除する
+      - [`oc adm policy remove-role-from-group`](adm/policy/remove-role-from-group.md) — プロジェクトを対象に、グループからロールを削除する
+      - [`oc adm policy remove-role-from-user`](adm/policy/remove-role-from-user.md) — プロジェクトを対象に、ユーザーからロールを削除する
+      - [`oc adm policy remove-scc-from-group`](adm/policy/remove-scc-from-group.md) — security context constraint からグループを削除する
+      - [`oc adm policy remove-scc-from-user`](adm/policy/remove-scc-from-user.md) — security context constraint からユーザーを削除する
+      - [`oc adm policy remove-user`](adm/policy/remove-user.md) — プロジェクトからユーザーを削除する
+      - [`oc adm policy scc-review`](adm/policy/scc-review.md) — どのサービスアカウントが Pod を作成できるかを確認する
+      - [`oc adm policy scc-subject-review`](adm/policy/scc-subject-review.md) — ユーザーまたはサービスアカウントが Pod を作成できるかどうかを確認する
+      - [`oc adm policy who-can`](adm/policy/who-can.md) — あるリソースに対して指定した操作を実行できるのは誰かを一覧する
+    - [`oc adm prune`](adm/prune.md) — サーバーから古いバージョンのリソースを削除する
+      - [`oc adm prune auth`](adm/prune/auth.md) — 指定したロール、クラスタロール、ユーザー、グループへの参照を削除します
+      - [`oc adm prune builds`](adm/prune/builds.md) — 完了済みおよび失敗した古いビルドを削除する
+      - [`oc adm prune deployments`](adm/prune/deployments.md) — 完了済みおよび失敗した古いデプロイメント設定を削除する
+      - [`oc adm prune groups`](adm/prune/groups.md) — 外部プロバイダにレコードが存在しない、古い OpenShift グループを削除する
+      - [`oc adm prune images`](adm/prune/images.md) — 参照されていないイメージを削除する
+      - [`oc adm prune renderedmachineconfigs`](adm/prune/renderedmachineconfigs.md) — OpenShift クラスタのレンダリング済み MachineConfig を prune します
+        - [`oc adm prune renderedmachineconfigs list`](adm/prune/renderedmachineconfigs/list.md) — OpenShift クラスタのレンダリング済み MachineConfig を一覧表示します
+    - [`oc adm reboot-machine-config-pool`](adm/reboot-machine-config-pool.md) — 指定した MachineConfigPool の再起動を開始する
+    - [`oc adm release`](adm/release.md) — OpenShift のリリースプロセスを管理するためのツール
+      - [`oc adm release extract`](adm/release/extract.md) — 更新ペイロードの内容をディスクに取り出す
+      - [`oc adm release info`](adm/release/info.md) — リリースの情報を表示する
+      - [`oc adm release new`](adm/release/new.md) — 新しい OpenShift リリースを作成する
+    - [`oc adm restart-kubelet`](adm/restart-kubelet.md) — 指定したノードで kubelet を再起動する
+    - [`oc adm taint`](adm/taint.md) — 1 つ以上のノードの taint を更新する
+    - [`oc adm top`](adm/top.md) — サーバー上のリソースの使用量統計を表示する
+      - [`oc adm top images`](adm/top/images.md) — イメージの使用量統計を表示する
+      - [`oc adm top imagestreams`](adm/top/imagestreams.md) — イメージストリームの使用量統計を表示する
+      - [`oc adm top node`](adm/top/node.md) — ノードのリソース使用量 (CPU / メモリ) を表示する
+      - [`oc adm top persistentvolumeclaims`](adm/top/persistentvolumeclaims.md) — 実験的機能: バインド済みの persistentvolumeclaim の使用量統計を表示します
+      - [`oc adm top pod`](adm/top/pod.md) — Pod のリソース使用量 (CPU / メモリ) を表示する
+    - [`oc adm uncordon`](adm/uncordon.md) — ノードをスケジュール可能にする
+    - [`oc adm upgrade`](adm/upgrade.md) — クラスタをアップグレードする、またはアップグレードチャネルを調整する
+      - [`oc adm upgrade channel`](adm/upgrade/channel.md) — 更新チャネルを設定またはクリアする
+      - [`oc adm upgrade recommend`](adm/upgrade/recommend.md) — クラスタ更新の推奨情報を表示します。
+      - [`oc adm upgrade status`](adm/upgrade/status.md) — 現在のクラスタバージョン更新、またはマルチアーキテクチャ移行の状況を表示する
+    - [`oc adm verify-image-signature`](adm/verify-image-signature.md) — イメージ署名に含まれるイメージの identity を検証する
+    - [`oc adm wait-for-node-reboot`](adm/wait-for-node-reboot.md) — `oc adm reboot-machine-config-pool` の実行後、ノードの再起動を待つ
+    - [`oc adm wait-for-stable-cluster`](adm/wait-for-stable-cluster.md) — プラットフォームのオペレータが安定するまで待つ
+  - [`oc replace`](replace.md) — ファイル名または標準入力でリソースを置き換える
+  - [`oc patch`](patch.md) — リソースのフィールドを更新する
+  - [`oc process`](process.md) — テンプレートを処理してリソースのリストにする
+  - [`oc extract`](extract.md) — シークレットまたは config map をディスクに取り出す
+  - [`oc observe`](observe.md) — リソースの変更を監視して反応する（実験的機能）
+  - [`oc policy`](policy.md) — 認可ポリシーを管理する
+    - [`oc policy add-role-to-group`](policy/add-role-to-group.md) — プロジェクトを対象に、グループにロールを付与する
+    - [`oc policy add-role-to-user`](policy/add-role-to-user.md) — 現在のプロジェクトを対象に、ユーザーまたはサービスアカウントにロールを付与する
+    - [`oc policy remove-group`](policy/remove-group.md) — プロジェクトからグループを削除する
+    - [`oc policy remove-role-from-group`](policy/remove-role-from-group.md) — プロジェクトを対象に、グループからロールを削除する
+    - [`oc policy remove-role-from-user`](policy/remove-role-from-user.md) — プロジェクトを対象に、ユーザーからロールを削除する
+    - [`oc policy remove-user`](policy/remove-user.md) — プロジェクトからユーザーを削除する
+    - [`oc policy scc-review`](policy/scc-review.md) — どのサービスアカウントが Pod を作成できるかを確認する
+    - [`oc policy scc-subject-review`](policy/scc-subject-review.md) — ユーザーまたはサービスアカウントが Pod を作成できるかどうかを確認する
+    - [`oc policy who-can`](policy/who-can.md) — あるリソースに対して指定した操作を実行できるのは誰かを一覧する
+  - [`oc auth`](auth.md) — 認可の状態を調べる
+    - [`oc auth can-i`](auth/can-i.md) — ある操作が許可されるかどうかを確認する
+    - [`oc auth reconcile`](auth/reconcile.md) — RBAC のロール、ロールバインディング、クラスタロール、クラスタロールバインディングの各オブジェクトのルールを reconcile します
+    - [`oc auth whoami`](auth/whoami.md) — 実験的機能: 自分自身のサブジェクト属性を確認する
+  - [`oc image`](image.md) — イメージ管理に便利なコマンド
+    - [`oc image append`](image/append.md) — イメージにレイヤーを追加してレジストリに push する
+    - [`oc image extract`](image/extract.md) — イメージからファイルシステムにファイルをコピーする
+    - [`oc image info`](image/info.md) — イメージの情報を表示する
+    - [`oc image mirror`](image/mirror.md) — あるリポジトリから別のリポジトリへイメージをミラーする
+  - [`oc registry`](registry.md) — レジストリを操作するためのコマンド
+    - [`oc registry login`](registry/login.md) — 統合レジストリにログインする
+  - [`oc idle`](idle.md) — スケール可能なリソースをアイドル化する
+  - [`oc api-versions`](api-versions.md) — サーバーがサポートしている API バージョンを "group/version" の形式で表示する
+  - [`oc api-resources`](api-resources.md) — サーバーがサポートしている API リソースを表示する
+  - [`oc cluster-info`](cluster-info.md) — クラスタの情報を表示する
+    - [`oc cluster-info dump`](cluster-info/dump.md) — デバッグと診断に必要な情報をダンプする
+  - [`oc diff`](diff.md) — 稼働中のバージョンと、適用した場合のバージョンの差分を表示する
+  - [`oc kustomize`](kustomize.md) — ディレクトリまたは URL から kustomization のターゲットをビルドする
+  - [`oc get-token`](get-token.md) — 実験的機能: credentials exec プラグインとして、外部 OIDC 発行者からトークンを取得する
+  - [`oc logout`](logout.md) — 現在のサーバーセッションを終了する
+  - [`oc config`](config.md) — kubeconfig ファイルを変更する
+    - [`oc config current-context`](config/current-context.md) — current-context を表示する
+    - [`oc config delete-cluster`](config/delete-cluster.md) — 指定したクラスタを kubeconfig から削除する
+    - [`oc config delete-context`](config/delete-context.md) — 指定したコンテキストを kubeconfig から削除する
+    - [`oc config delete-user`](config/delete-user.md) — 指定したユーザーを kubeconfig から削除する
+    - [`oc config get-clusters`](config/get-clusters.md) — kubeconfig に定義されたクラスタを表示する
+    - [`oc config get-contexts`](config/get-contexts.md) — 1 つまたは複数のコンテキストの詳細を表示する
+    - [`oc config get-users`](config/get-users.md) — kubeconfig に定義されたユーザーを表示する
+    - [`oc config new-admin-kubeconfig`](config/new-admin-kubeconfig.md) — 新しい admin.kubeconfig を生成し、サーバーに信頼させて表示する
+    - [`oc config new-kubelet-bootstrap-kubeconfig`](config/new-kubelet-bootstrap-kubeconfig.md) — 新しい kubelet 用 /etc/kubernetes/kubeconfig を生成し、サーバーに信頼させて表示する
+    - [`oc config refresh-ca-bundle`](config/refresh-ca-bundle.md) — API サーバーに接続して OpenShift の CA バンドルを更新する
+    - [`oc config rename-context`](config/rename-context.md) — kubeconfig ファイルのコンテキスト名を変更する
+    - [`oc config set`](config/set.md) — kubeconfig ファイル内の個々の値を設定する
+    - [`oc config set-cluster`](config/set-cluster.md) — kubeconfig にクラスタエントリを設定する
+    - [`oc config set-context`](config/set-context.md) — kubeconfig にコンテキストエントリを設定する
+    - [`oc config set-credentials`](config/set-credentials.md) — kubeconfig にユーザーエントリを設定する
+    - [`oc config unset`](config/unset.md) — kubeconfig ファイル内の個々の値を解除する
+    - [`oc config use-context`](config/use-context.md) — kubeconfig ファイルの current-context を設定する
+    - [`oc config view`](config/view.md) — マージ済みの kubeconfig 設定、または指定した kubeconfig ファイルを表示する
+  - [`oc whoami`](whoami.md) — 現在のセッションの情報を返します。
+  - [`oc completion`](completion.md) — 指定したシェル (bash, zsh, fish, powershell) 用のシェル補完コードを出力する
+  - [`oc plugin`](plugin.md) — プラグインを扱うためのユーティリティを提供します
+    - [`oc plugin list`](plugin/list.md) — ユーザーの PATH 上にある、参照可能なすべてのプラグイン実行ファイルを一覧する
+  - [`oc version`](version.md) — クライアントとサーバーのバージョン情報を表示する

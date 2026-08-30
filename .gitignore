@@ -1,0 +1,6 @@
+# 翻訳の作業用中間ファイル
+i18n/parts/
+i18n/keys.json
+
+# ローカル設定
+.claude/

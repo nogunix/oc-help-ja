@@ -1,0 +1,55 @@
+# `oc create imagestream`
+
+> 空のイメージストリームを新規作成する
+
+[`oc`](../oc.md) / [`oc create`](../create.md) / `imagestream`
+
+## Usage
+
+```
+oc create imagestream NAME [flags] [options]
+```
+
+新しいイメージストリームを作成します。
+
+イメージストリームを使うと、他のレジストリのイメージを追跡・タグ付け・インポートできます。また、イメージを push できる、アクセス制御された宛先も定義します。1 つのイメージストリームは多数の異なるレジストリのイメージを参照でき、それらのイメージが Pod・デプロイメント・ビルドからどう参照されるかを制御できます。
+
+--lookup-local を指定すると、Pod が名前でイメージを参照した際に、そのイメージストリームがソースとして使用されます。たとえばストリーム 'mysql' がローカル名を解決する設定になっている場合、'mysql:latest' を指す Pod は、そのイメージストリームの "latest" タグが指すイメージを使用します。
+
+エイリアス: imagestream, is
+
+## Examples
+
+```bash
+# 新しいイメージストリームを作成する
+oc create imagestream mysql
+```
+
+## Options
+
+- `--allow-missing-template-keys=true`
+  true の場合、テンプレート内でフィールドやマップのキーが見つからなくても、テンプレートのエラーを無視します。golang と jsonpath の出力形式にのみ適用されます。
+
+- `--dry-run='none'`
+  "none"、"server"、"client" のいずれかを指定します。client の場合は、送信されるはずのオブジェクトを送信せずに表示するだけです。server の場合は、リソースを永続化せずにサーバー側へリクエストを送ります。
+
+- `--lookup-local=false`
+  true の場合、このプロジェクト内のトップレベルのイメージ参照において、そのイメージストリームがソースになります。
+
+- `-o, --output=''`
+  出力形式。次のいずれかを指定します: (json, yaml, kyaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file)。
+
+- `--save-config=false`
+  true の場合、現在のオブジェクトの設定がそのアノテーションに保存されます。false の場合、アノテーションは変更されません。このフラグは、今後このオブジェクトに対して kubectl apply を実行したい場合に便利です。
+
+- `--show-managed-fields=false`
+  true の場合、オブジェクトを JSON または YAML 形式で出力する際に managedFields を残します。
+
+- `--template=''`
+  -o=go-template、-o=go-template-file を使う場合のテンプレート文字列、またはテンプレートファイルのパス。形式は golang テンプレート [http://golang.org/pkg/text/template/#pkg-overview] です。
+
+> すべてのコマンドに共通するグローバルオプションの一覧は "oc options" で確認できます。
+
+---
+
+<sub>`$ oc create imagestream --help` / `gen-oc-help.py` で生成</sub>
