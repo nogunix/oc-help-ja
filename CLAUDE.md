@@ -17,25 +17,16 @@
 | `README.md` | 目次（自動生成） |
 | `i18n/ja.json` | 翻訳カタログ |
 
-## ヘルプ更新の手順
+## 環境方針
 
-### 1. ヘルプテキスト再取得・再生成
+**GitHub Actions を正とする。** ヘルプの再生成（`all.txt`、`*.md`、`README.md`）は Actions が公式ミラーの `oc` で行い、PR を自動作成する。ローカルでは `gen-oc-help.py` による再生成は原則行わない。
 
-```bash
-python3 gen-oc-help.py            # all.txt, *.md, README.md を再生成
-python3 gen-oc-help.py --extract  # 新しい msgid を i18n/ja.json に抽出
-python3 gen-oc-help.py --stats    # 翻訳カバレッジを確認
-```
+ローカルで行うのは以下のみ:
+- `python3 gen-oc-help.py --stats` — 翻訳カバレッジの確認
+- `i18n/ja.json` の翻訳編集 → コミット・プッシュ（Actions が次回実行時に反映）
+- `python3 gen-oc-help.py --extract` — 新しい msgid の抽出（翻訳作業の準備）
 
-`oc` はローカルにインストール済みのものを使う（`--oc` で指定可）。
-
-### 2. 翻訳カバレッジ確認
-
-`--stats` で未訳文字列がないか確認する。未訳があれば `i18n/ja.json` を編集して翻訳を追加してから再生成。
-
-### 3. コミット・プッシュ
-
-差分を確認してコミット。コミットメッセージは `oc <バージョン> のヘルプで all.txt と Markdown を再生成` のスタイル。
+理由: ローカル（Homebrew）と Actions（公式ミラー）で `oc` のバージョン文字列が異なり、両方で再生成するとコンフリクトの原因になる。
 
 ## GitHub Actions 自動更新
 

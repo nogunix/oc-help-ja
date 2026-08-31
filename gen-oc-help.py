@@ -45,6 +45,8 @@ def tr(s):
 def run_help(oc, path):
     p = subprocess.run([oc] + path + ['--help'], capture_output=True, text=True)
     out = p.stdout if p.stdout.strip() else p.stderr
+    home = os.path.expanduser('~')
+    out = out.replace(home, '$HOME')
     return out.rstrip('\n') + '\n'
 
 
