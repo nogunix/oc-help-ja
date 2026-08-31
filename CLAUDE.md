@@ -50,6 +50,44 @@ Settings → Actions → General → Workflow permissions:
 - **Read and write permissions** を選択
 - **Allow GitHub Actions to create and approve pull requests** にチェック
 
+## 自動生成 PR の処理
+
+Actions が作成した PR は以下の手順で処理する。
+
+### 1. PR の内容確認
+
+```bash
+gh pr list --state open
+gh pr view <PR番号>
+gh pr diff <PR番号>
+```
+
+差分が `all.txt`、`*.md`、`README.md`、`i18n/ja.json` のヘルプ更新のみであることを確認する。
+
+### 2. マージ
+
+```bash
+gh pr merge <PR番号> --merge --delete-branch
+```
+
+squash ではなく通常マージ。マージ後にリモートブランチを削除する。
+
+### 3. ローカルの同期
+
+```bash
+git pull
+```
+
+## 一連の作業フロー（まとめ）
+
+1. `gh run list` で Actions の実行結果を確認
+2. 失敗していれば `gh run view <run-id>` で原因を調査・修正
+3. 成功していれば `gh pr list` で PR を確認
+4. `gh pr view` / `gh pr diff` で差分を確認
+5. `gh pr merge --merge --delete-branch` でマージ
+6. 必要に応じてローカルで `python3 gen-oc-help.py --stats` を実行し翻訳カバレッジを確認
+7. 未訳があれば `i18n/ja.json` を編集 → `python3 gen-oc-help.py` で再生成 → コミット・プッシュ
+
 ## コマンドリファレンス
 
 ```bash
@@ -60,6 +98,9 @@ gh workflow run "Update oc help (Japanese)"
 gh run list --limit 5
 gh run view <run-id>
 
-# PR 確認
+# PR 確認・マージ
 gh pr list --state open
+gh pr view <PR番号>
+gh pr diff <PR番号>
+gh pr merge <PR番号> --merge --delete-branch
 ```
