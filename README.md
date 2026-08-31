@@ -1,4 +1,4 @@
-# oc help tree（日本語） (`4.22.0-202607272042.p2.g7ec2e14.assembly.stream.el9-7ec2e14`)
+# oc help tree（日本語） (`4.22.0-202608122145.p2.g7ec2e14.assembly.stream.el9-7ec2e14`)
 
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![OpenShift](https://img.shields.io/badge/OpenShift-4.22-ee0000.svg)](https://github.com/openshift/oc)

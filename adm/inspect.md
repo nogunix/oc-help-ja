@@ -47,7 +47,7 @@ oc adm inspect clusteroperators,clusterversions
 - `--as-user-extra=[]`
   この操作で偽装するユーザーの extra 情報。同じキーに複数の値を指定するには、このフラグを繰り返し指定します。
 
-- `--cache-dir='/home/mnoguchi/.kube/cache'`
+- `--cache-dir='/home/runner/.kube/cache'`
   デフォルトのキャッシュディレクトリ
 
 - `--certificate-authority=''`

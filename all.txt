@@ -1,4 +1,4 @@
-oc 4.22.0-202607272042.p2.g7ec2e14.assembly.stream.el9-7ec2e14 - all help texts
+oc 4.22.0-202608122145.p2.g7ec2e14.assembly.stream.el9-7ec2e14 - all help texts
 
 
 ==============================================================================
@@ -7708,7 +7708,7 @@ Options:
     --as-user-extra=[]:
 	User extras to impersonate for the operation, this flag can be repeated to specify multiple values for the same key.
 
-    --cache-dir='/home/mnoguchi/.kube/cache':
+    --cache-dir='/home/runner/.kube/cache':
 	Default cache directory
 
     --certificate-authority='':
