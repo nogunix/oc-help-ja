@@ -41,6 +41,14 @@ oc wait --for=create secret/busybox1 --timeout=30s
 # "delete" コマンドの実行後、Pod "busybox1" が削除されるまで、タイムアウト 60 秒で待つ
 oc delete pod/busybox1
 oc wait --for=delete pod/busybox1 --timeout=60s
+
+# Wait for pod "busybox1" to be created AND reach the "Ready" status condition
+oc wait --for=condition=Ready --for=create pod/busybox1
+
+# Wait for pod "busybox1" to reach the "Ready" status OR for its containers to report a "False" readiness state
+until oc wait pod/busybox1 --for=condition=Ready --timeout=1s 2>/dev/null || \
+oc wait pod/busybox1 --for=condition=ContainersReady=False --timeout=1s 2>/dev/null; \
+do echo "Checking conditions..."; sleep 1; done
 ```
 
 ## Options
@@ -60,8 +68,8 @@ oc wait --for=delete pod/busybox1 --timeout=60s
 - `-f, --filename=[]`
   リソースを特定する。
 
-- `--for=''`
-  待機する条件: [create|delete|condition=condition-name[=condition-value]|jsonpath='{JSONPath expression}'=[JSONPath value]]。condition-value のデフォルトは true です。条件値は Unicode の simple case folding（より一般的な大文字小文字の同一視）を適用してから比較されます。
+- `--for=[]`
+  The condition to wait on: [create|delete|condition=condition-name[=condition-value]|jsonpath='{JSONPath expression}'=[JSONPath value]]. The default condition-value is true. Condition values are compared after Unicode simple case folding, which is a more general form of case-insensitivity. Multiple conditions are supported and AND'ed to each other in a sequential order. If --for=create is passed, it is always waited first.
 
 - `--local=false`
   true の場合、annotation は API サーバーに接続せずローカルで実行します。

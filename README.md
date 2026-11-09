@@ -1,14 +1,14 @@
-# oc help tree（日本語） (`4.22.0-202609151747.p2.gaea5a82.assembly.stream.el9-aea5a82`)
+# oc help tree（日本語） (`5.0.0-202611030132.p2.g4b0a124.assembly.stream.el9-4b0a124`)
 
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
-[![OpenShift](https://img.shields.io/badge/OpenShift-4.22-ee0000.svg)](https://github.com/openshift/oc)
+[![OpenShift](https://img.shields.io/badge/OpenShift-5.0-ee0000.svg)](https://github.com/openshift/oc)
 
 > **非公式の翻訳です。**
 > 本リポジトリは [openshift/oc](https://github.com/openshift/oc)（Copyright 2014 Red Hat, Inc.、Apache License 2.0）の `--help` 出力を日本語に翻訳した派生著作物です。
 > Red Hat, Inc. および OpenShift プロジェクトが本翻訳を承認・保証するものではありません。
 > "OpenShift" は Red Hat, Inc. の登録商標です。
 
-`gen-oc-help.py` で `oc ... --help` を再帰展開したもの。全 248 コマンド。
+`gen-oc-help.py` で `oc ... --help` を再帰展開したもの。全 251 コマンド。
 
 - 読む: [`oc.md`](oc.md) から辿るか、下の目次から
 - $EDITOR で開く: `./ochelp adm policy add-role-to-user`（引数なし + fzf で絞り込み）
@@ -267,6 +267,9 @@
     - [`oc config view`](config/view.md) — マージ済みの kubeconfig 設定、または指定した kubeconfig ファイルを表示する
   - [`oc whoami`](whoami.md) — 現在のセッションの情報を返します。
   - [`oc completion`](completion.md) — 指定したシェル (bash, zsh, fish, powershell) 用のシェル補完コードを出力する
+  - [`oc kuberc`](kuberc.md) — Manage kuberc configuration files
+    - [`oc kuberc set`](kuberc/set.md) — Set values in the kuberc configuration
+    - [`oc kuberc view`](kuberc/view.md) — Display the current kuberc configuration
   - [`oc plugin`](plugin.md) — プラグインを扱うためのユーティリティを提供します
     - [`oc plugin list`](plugin/list.md) — ユーザーの PATH 上にある、参照可能なすべてのプラグイン実行ファイルを一覧する
   - [`oc version`](version.md) — クライアントとサーバーのバージョン情報を表示する

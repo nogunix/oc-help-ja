@@ -61,7 +61,7 @@ oc describe pods frontend
   絞り込みに使うセレクター（ラベルクエリ）。'='、'=='、'!='、'in'、'notin' をサポートします（例: -l key1=value1,key2=value2,key3 in (value3)）。一致するオブジェクトは、指定したラベル条件をすべて満たす必要があります。
 
 - `--show-events=true`
-  true の場合、対象オブジェクトに関連するイベントを表示します。
+  If true, display events related to the described object. Defaults to true for a single object, false for multiple objects and prefix matching.
 
 > すべてのコマンドに共通するグローバルオプションの一覧は "oc options" で確認できます。
 

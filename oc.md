@@ -92,6 +92,7 @@ oc [flags] [options]
 
 ### その他のコマンド
 
+- [`kuberc`](kuberc.md) — Manage kuberc configuration files
 - [`plugin`](plugin.md) — プラグインを扱うためのユーティリティを提供します
 - [`version`](version.md) — クライアントとサーバーのバージョン情報を表示する
 

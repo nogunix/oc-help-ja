@@ -60,6 +60,9 @@ oc run nginx --image=nginx --command -- <cmd> <arg1> ... <argN>
 - `--command=false`
   true で追加の引数がある場合、それらをコンテナの 'args' フィールド（デフォルト）ではなく 'command' フィールドとして使用します。
 
+- `--detach-keys='ctrl-p,ctrl-q'`
+  Override the key sequence for detaching a container.
+
 - `--dry-run='none'`
   "none"、"server"、"client" のいずれかを指定します。client の場合は、送信されるはずのオブジェクトを送信せずに表示するだけです。server の場合は、リソースを永続化せずにサーバー側へリクエストを送ります。
 

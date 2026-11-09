@@ -32,11 +32,8 @@ oc create configmap my-config --from-file=key1=/path/to/bar/file1.txt --from-fil
 # key1=config1 と key2=config2 を持つ my-config という名前の config map を新規作成する
 oc create configmap my-config --from-literal=key1=config1 --from-literal=key2=config2
 
-# ファイル内の key=value のペアから my-config という名前の config map を新規作成する
-oc create configmap my-config --from-file=path/to/bar
-
-# env ファイルから my-config という名前の config map を新規作成する
-oc create configmap my-config --from-env-file=path/to/foo.env --from-env-file=path/to/bar.env
+# Create a new config map named my-config with key=value pairs from an env file
+oc create configmap my-config --from-env-file=path/to/bar.env
 ```
 
 ## Options

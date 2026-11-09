@@ -67,6 +67,9 @@ cat service.yaml | oc diff -f -
 - `--show-managed-fields=false`
   true の場合、managed fields も差分に含めます。
 
+- `--show-secrets=false`
+  If true, do not mask secret values in the diff.
+
 > すべてのコマンドに共通するグローバルオプションの一覧は "oc options" で確認できます。
 
 ---
