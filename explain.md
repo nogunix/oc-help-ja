@@ -46,7 +46,7 @@ oc explain deployment --output=plaintext-openapiv2
 - `-o, --output='plaintext'`
   スキーマの出力形式 (plaintext, plaintext-openapiv2)
 
-- `--recursive=false`
+- `-R, --recursive=false`
   フィールドのさらに下のフィールドを表示する（現時点では 1 階層のみ）
 
 > すべてのコマンドに共通するグローバルオプションの一覧は "oc options" で確認できます。

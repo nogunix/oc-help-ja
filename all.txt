@@ -1,4 +1,4 @@
-oc 4.22.0-202609151747.p2.gaea5a82.assembly.stream.el9-aea5a82 - all help texts
+oc 5.0.0-202611030132.p2.g4b0a124.assembly.stream.el9-4b0a124 - all help texts
 
 
 ==============================================================================
@@ -84,6 +84,7 @@ Settings Commands:
   completion        Output shell completion code for the specified shell (bash, zsh, fish, or powershell)
 
 Other Commands:
+  kuberc            Manage kuberc configuration files
   plugin            Provides utilities for interacting with plugins
   version           Print the client and server version information
 
@@ -503,7 +504,7 @@ Options:
     -o, --output='plaintext':
 	Format in which to render the schema (plaintext, plaintext-openapiv2)
 
-    --recursive=false:
+    -R, --recursive=false:
 	Print the fields of fields (Currently only 1 level deep)
 
 Usage:
@@ -1825,11 +1826,8 @@ Examples:
   # Create a new config map named my-config with key1=config1 and key2=config2
   oc create configmap my-config --from-literal=key1=config1 --from-literal=key2=config2
   
-  # Create a new config map named my-config from the key=value pairs in the file
-  oc create configmap my-config --from-file=path/to/bar
-  
-  # Create a new config map named my-config from an env file
-  oc create configmap my-config --from-env-file=path/to/foo.env --from-env-file=path/to/bar.env
+  # Create a new config map named my-config with key=value pairs from an env file
+  oc create configmap my-config --from-env-file=path/to/bar.env
 
 Options:
     --allow-missing-template-keys=true:
@@ -3944,7 +3942,7 @@ Options:
 	Selector (label query) to filter on, supports '=', '==', '!=', 'in', 'notin'.(e.g. -l key1=value1,key2=value2,key3 in (value3)). Matching objects must satisfy all of the specified label constraints.
 
     --show-events=true:
-	If true, display events related to the described object.
+	If true, display events related to the described object. Defaults to true for a single object, false for multiple objects and prefix matching.
 
 Usage:
   oc describe (-f FILENAME | TYPE [NAME_PREFIX | -l label] | TYPE/NAME) [options]
@@ -5248,7 +5246,7 @@ Update volumes on a pod template.
   *  persistentvolumeclaim or pvc (persistent volume claim): Link the volume directory in the container to a persistent volume claim you have allocated by name - a persistent volume claim is a request to allocate storage. Note that if your claim hasn't been bound, your pods will not start.
   *  secret (mounted secret): Secret volumes mount a named secret to the provided directory.
 
- For descriptions on other volume types, see https://docs.openshift.com
+ For descriptions on other volume types, see https://docs.redhat.com/en/documentation/openshift_container_platform/
 
 Aliases:
 volumes, volume
@@ -6541,6 +6539,9 @@ Options:
     -c, --container='':
 	Container name. If omitted, use the kubectl.kubernetes.io/default-container annotation for selecting the container to be attached or the first container in the pod will be chosen
 
+    --detach-keys='ctrl-p,ctrl-q':
+	Override the key sequence for detaching a container
+
     --pod-running-timeout=1m0s:
 	The length of time (like 5s, 2m, or 3h, higher than zero) to wait until at least one pod is running
 
@@ -6608,6 +6609,9 @@ Options:
 
     --command=false:
 	If true and extra arguments are present, use them as the 'command' field in the container, rather than the 'args' field which is the default.
+
+    --detach-keys='ctrl-p,ctrl-q':
+	Override the key sequence for detaching a container.
 
     --dry-run='none':
 	Must be "none", "server", or "client". If client strategy, only print the object that would be sent, without sending it. If server strategy, submit server-side request without persisting the resource.
@@ -6785,6 +6789,14 @@ Examples:
   # Wait for the pod "busybox1" to be deleted, with a timeout of 60s, after having issued the "delete" command
   oc delete pod/busybox1
   oc wait --for=delete pod/busybox1 --timeout=60s
+  
+  # Wait for pod "busybox1" to be created AND reach the "Ready" status condition
+  oc wait --for=condition=Ready --for=create pod/busybox1
+  
+  # Wait for pod "busybox1" to reach the "Ready" status OR for its containers to report a "False" readiness state
+  until oc wait pod/busybox1 --for=condition=Ready --timeout=1s 2>/dev/null || \
+  oc wait pod/busybox1 --for=condition=ContainersReady=False --timeout=1s 2>/dev/null; \
+  do echo "Checking conditions..."; sleep 1; done
 
 Options:
     --all=false:
@@ -6802,8 +6814,8 @@ Options:
     -f, --filename=[]:
 	identifying the resource.
 
-    --for='':
-	The condition to wait on: [create|delete|condition=condition-name[=condition-value]|jsonpath='{JSONPath expression}'=[JSONPath value]]. The default condition-value is true. Condition values are compared after Unicode simple case folding, which is a more general form of case-insensitivity.
+    --for=[]:
+	The condition to wait on: [create|delete|condition=condition-name[=condition-value]|jsonpath='{JSONPath expression}'=[JSONPath value]]. The default condition-value is true. Condition values are compared after Unicode simple case folding, which is a more general form of case-insensitivity. Multiple conditions are supported and AND'ed to each other in a sequential order. If --for=create is passed, it is always waited first.
 
     --local=false:
 	If true, annotation will NOT contact api-server but run locally.
@@ -7882,7 +7894,9 @@ Launch a pod to gather debugging information.
  This command will launch a pod in a temporary namespace on your cluster that gathers debugging information and then downloads the gathered information.
 
 Examples:
-  # Gather information using the default plug-in image and command, writing into ./must-gather.local.<rand>
+  # Gather information using the default plug-in image and command, writing into
+  # ./must-gather.local.<cluster-id-suffix>.<timestamp(UTC)>.<rand>
+  # or ./must-gather.local.<timestamp(UTC)>.<rand> if the cluster ID is unavailable
   oc adm must-gather
   
   # Gather information with a specific local folder to copy to
@@ -12207,6 +12221,9 @@ Options:
     --show-managed-fields=false:
 	If true, include managed fields in the diff.
 
+    --show-secrets=false:
+	If true, do not mask secret values in the diff.
+
 Usage:
   oc diff -f FILENAME [options]
 
@@ -12900,17 +12917,29 @@ Examples:
   oc whoami
 
 Options:
+    --allow-missing-template-keys=true:
+	If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
+
+    -o, --output='':
+	Output format. One of: (json, yaml, kyaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+
     --show-console=false:
 	If true, print the current server's web console URL
 
     -c, --show-context=false:
 	Print the current user context name
 
+    --show-managed-fields=false:
+	If true, keep the managedFields when printing objects in JSON or YAML format.
+
     --show-server=false:
 	If true, print the current server's REST API URL
 
     -t, --show-token=false:
 	Print the token the current session is using. This will return an error if you are using a different form of authentication.
+
+    --template='':
+	Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
 
 Usage:
   oc whoami [flags] [options]
@@ -12976,6 +13005,141 @@ Examples:
 
 Usage:
   oc completion SHELL [options]
+
+Use "oc options" for a list of global command-line options (applies to all commands).
+
+
+==============================================================================
+== oc kuberc
+==============================================================================
+
+Manage user preferences (kuberc) file.
+
+ The kuberc file allows you to customize your oc experience.
+
+Examples:
+  # View the current kuberc configuration
+  oc kuberc view
+  
+  # Set a default value for a command flag
+  oc kuberc set --section defaults --command get --option output=wide
+  
+  # Create an alias for a command
+  oc kuberc set --section aliases --name getn --command get --prependarg nodes --option output=wide
+
+Available Commands:
+  set           Set values in the kuberc configuration
+  view          Display the current kuberc configuration
+
+Usage:
+  oc kuberc SUBCOMMAND [options]
+
+Use "oc kuberc <command> --help" for more information about a given command.
+Use "oc options" for a list of global command-line options (applies to all commands).
+
+
+==============================================================================
+== oc kuberc set
+==============================================================================
+
+Set values in the kuberc configuration file.
+
+ Use --section to specify whether to set defaults or aliases.
+
+ For defaults: Sets default flag values for oc commands. The --command flag should specify only the command (e.g., "get", "create", "set env"), not resources.
+
+ For aliases: Creates command aliases with optional default flag values and arguments. Use --prependarg and --appendarg to include resources or other arguments.
+
+Examples:
+  # Set default output format for 'get' command
+  oc kuberc set --section defaults --command get --option output=wide
+  
+  # Set default output format for a subcommand
+  oc kuberc set --section defaults --command "set env" --option output=yaml
+  
+  # Create an alias 'getn' for 'get' command with prepended 'nodes' resource
+  oc kuberc set --section aliases --name getn --command get --prependarg nodes --option output=wide
+  
+  # Create an alias 'runx' for 'run' command with appended arguments
+  oc kuberc set --section aliases --name runx --command run --option image=nginx --appendarg "--" --appendarg custom-arg1
+  
+  # Overwrite an existing default
+  oc kuberc set --section defaults --command get --option output=json --overwrite
+  
+  # Set the credential plugin policy and allowlist
+  oc kuberc set --section credentialplugin --policy Allowlist --allowlist-entry command=cloud-credential-helper
+
+Options:
+    --allowlist-entry=[]:
+	Allowlist entry the form field=value (can be specified multiple times)
+
+    --appendarg=[]:
+	Argument to append to the command (can be specified multiple times, for aliases only)
+
+    --command='':
+	Command to configure (e.g., 'get', 'create', 'set env')
+
+    --kuberc='':
+	Path to the kuberc file to use for preferences. This can be disabled by exporting KUBECTL_KUBERC=false feature gate or turning off the feature KUBERC=off.
+
+    --name='':
+	Alias name (required for --section=aliases)
+
+    --option=[]:
+	Flag option in the form flag=value (can be specified multiple times)
+
+    --overwrite=false:
+	Allow overwriting existing entries
+
+    --policy='':
+	Plugin policy to use for exec credential plugins, must be one of 'AllowAll', 'DenyAll' or 'Allowlist'
+
+    --prependarg=[]:
+	Argument to prepend to the command (can be specified multiple times, for aliases only)
+
+    --section='':
+	Section to modify: 'defaults', 'aliases', or 'credentialplugin'
+
+Usage:
+  oc kuberc set --section (defaults|aliases) --command COMMAND [options]
+
+Use "oc options" for a list of global command-line options (applies to all commands).
+
+
+==============================================================================
+== oc kuberc view
+==============================================================================
+
+Display the contents of the kuberc file in the specified output format.
+
+Examples:
+  # View kuberc configuration in YAML format (default)
+  oc kuberc view
+  
+  # View kuberc configuration in JSON format
+  oc kuberc view --output json
+  
+  # View a specific kuberc file
+  oc kuberc view --kuberc /path/to/kuberc
+
+Options:
+    --allow-missing-template-keys=true:
+	If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
+
+    --kuberc='':
+	Path to the kuberc file to use for preferences. This can be disabled by exporting KUBECTL_KUBERC=false feature gate or turning off the feature KUBERC=off.
+
+    -o, --output='yaml':
+	Output format. One of: (json, yaml, kyaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+
+    --show-managed-fields=false:
+	If true, keep the managedFields when printing objects in JSON or YAML format.
+
+    --template='':
+	Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+
+Usage:
+  oc kuberc view [options]
 
 Use "oc options" for a list of global command-line options (applies to all commands).
 

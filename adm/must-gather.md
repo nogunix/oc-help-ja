@@ -17,7 +17,9 @@ oc adm must-gather [flags] [options]
 ## Examples
 
 ```bash
-# デフォルトのプラグインイメージとコマンドで情報を収集し、./must-gather.local.<rand> に書き出す
+# Gather information using the default plug-in image and command, writing into
+# ./must-gather.local.<cluster-id-suffix>.<timestamp(UTC)>.<rand>
+# or ./must-gather.local.<timestamp(UTC)>.<rand> if the cluster ID is unavailable
 oc adm must-gather
 
 # コピー先として特定のローカルフォルダを指定して情報を収集する

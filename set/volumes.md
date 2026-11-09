@@ -20,7 +20,7 @@ oc set volumes RESOURCE/NAME --add|--remove [flags] [options]
 - hostdir（ホストのディレクトリ）: 任意のホスト上の特定パスにあるディレクトリ（昇格した権限が必要）
 - persistentvolumeclaim または pvc（永続ボリュームクレーム）: コンテナ内のボリュームディレクトリを、名前で指定した既存の永続ボリュームクレームに結び付けます。永続ボリュームクレームはストレージ割り当ての要求です。クレームがバインドされていない場合、Pod は起動しない点に注意してください。
 - secret（マウントされたシークレット）: シークレットボリュームは、名前で指定したシークレットを指定のディレクトリにマウントします。
-他のボリュームタイプの説明については https://docs.openshift.com を参照してください
+For descriptions on other volume types, see https://docs.redhat.com/en/documentation/openshift_container_platform/
 
 エイリアス: volumes, volume
 

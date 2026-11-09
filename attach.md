@@ -35,6 +35,9 @@ oc attach rs/nginx
 - `-c, --container=''`
   コンテナ名。省略した場合は、アタッチ対象のコンテナ選択に kubectl.kubernetes.io/default-container アノテーションが使われ、それも無ければ Pod 内の最初のコンテナが選ばれます
 
+- `--detach-keys='ctrl-p,ctrl-q'`
+  Override the key sequence for detaching a container
+
 - `--pod-running-timeout=1m0s`
   少なくとも 1 つの Pod が実行状態になるまで待つ時間（5s、2m、3h のような 0 より大きい値）
 
